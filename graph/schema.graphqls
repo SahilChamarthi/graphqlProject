@@ -36,5 +36,5 @@ type Mutation {
 
 input UpdateStoryInput {
   title: String
-  url: String
+  content: String
 }

@@ -11,8 +11,7 @@ import (
 
 // CreateStory is the resolver for the createStory field.
 func (r *mutationResolver) CreateStory(ctx context.Context, input model.NewStory) (*model.Story, error) {
-
-	story := model.Story{
+	story := &model.Story{
 		ID:      input.StoryID,
 		Title:   input.Title,
 		Content: input.Content,
@@ -23,12 +22,10 @@ func (r *mutationResolver) CreateStory(ctx context.Context, input model.NewStory
 	}
 
 	return r.S.AddStory(story)
-
 }
 
 // UpdateStory is the resolver for the updateStory field.
 func (r *mutationResolver) UpdateStory(ctx context.Context, storyID string, input model.UpdateStoryInput) (*model.Story, error) {
-
 	return r.S.UpdateStory(storyID, input)
 }
 

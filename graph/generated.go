@@ -2909,7 +2909,7 @@ func (ec *executionContext) unmarshalInputUpdateStoryInput(ctx context.Context, 
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"title", "url"}
+	fieldsInOrder := [...]string{"title", "content"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -2925,15 +2925,15 @@ func (ec *executionContext) unmarshalInputUpdateStoryInput(ctx context.Context, 
 				return it, err
 			}
 			it.Title = data
-		case "url":
+		case "content":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.URL = data
+			it.Content = data
 		}
 	}
 

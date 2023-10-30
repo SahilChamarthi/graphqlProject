@@ -2,6 +2,8 @@ package main
 
 import (
 	"grapgql/graph"
+	"grapgql/store"
+	"grapgql/store/mstore"
 	"log"
 	"net/http"
 	"os"
@@ -18,7 +20,10 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	service := mstore.NewService()
+	s := store.NewStore(&service)
+
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{S: s}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)

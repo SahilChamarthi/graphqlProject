@@ -18,8 +18,8 @@ type Story struct {
 }
 
 type UpdateStoryInput struct {
-	Title *string `json:"title,omitempty"`
-	URL   *string `json:"url,omitempty"`
+	Title   *string `json:"title,omitempty"`
+	Content *string `json:"content,omitempty"`
 }
 
 type User struct {

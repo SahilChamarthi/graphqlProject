@@ -6,27 +6,30 @@ import (
 )
 
 type Service struct {
-	StoryStore map[string]*model.Story
+	storyStore map[string]*model.Story
 }
 
 func NewService() Service {
 
-	return Service{StoryStore: make(map[string]*model.Story)}
+	return Service{storyStore: make(map[string]*model.Story)}
 }
 
 func (s Service) AddStory(story *model.Story) (*model.Story, error) {
 
-	s.StoryStore[story.ID] = story
+	s.storyStore[story.ID] = story
 	return story, nil
 
 }
 
-func (s Service) UpdateStory(storyId string) (*model.Story, error) {
-	val, ok := s.StoryStore[storyId]
+func (s Service) UpdateStory(storyId string, input model.UpdateStoryInput) (*model.Story, error) {
+	val, ok := s.storyStore[storyId]
 
 	if !ok {
 		return nil, errors.New("story not found")
 	}
+
+	val.Content = *input.Content
+	val.Title = *input.Title
 
 	return val, nil
 }
@@ -35,7 +38,7 @@ func (s Service) FindAllStories() []*model.Story {
 
 	var stories []*model.Story
 
-	for _, v := range s.StoryStore {
+	for _, v := range s.storyStore {
 
 		stories = append(stories, v)
 	}
@@ -43,9 +46,9 @@ func (s Service) FindAllStories() []*model.Story {
 	return stories
 }
 
-func (s Service) FindStoryByID(storyId string) (*model.Story, error) {
+func (s Service) FindStoryById(storyId string) (*model.Story, error) {
 
-	story, ok := s.StoryStore[storyId]
+	story, ok := s.storyStore[storyId]
 
 	if !ok {
 		return nil, errors.New("story not found")
